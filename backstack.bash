@@ -42,11 +42,11 @@ function back() {
         target="$(tail -n1 $BACKSTACK)"
         if [ -d "$target" ]; then
             pwd >> $FWSTACK
+            __cd "$target"
         else
             echo "directory no longer exists: $target, skipping..." >&2
         fi
         sed -i '$ d' $BACKSTACK
-        __cd "$target"
     else
         echo "cannot go back any farther" >&2
     fi
@@ -57,11 +57,11 @@ function fw() {
         target="$(tail -n1 $FWSTACK)"
         if [ -d "$target" ]; then
             pwd >> $BACKSTACK
+            __cd "$target"
         else
             echo "directory no longer exists: $target, skipping..." >&2
         fi
         sed -i '$ d' $FWSTACK
-        __cd "$target"
     else
         echo "cannot go fw any farther" >&2
     fi
